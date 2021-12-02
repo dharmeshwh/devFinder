@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const Style = styled.div`
-  background-color: #707070;
-  height: 500px;
+  margin-bottom: 40px;
   .main {
     font-family: "Heebo", sans-serif;
     font-family: "M PLUS Code Latin", sans-serif;
@@ -15,44 +14,50 @@ const Style = styled.div`
       justify-content: space-between;
       margin: auto;
       align-items: center;
-
+      width: 98%;
+      color: white;
       p:nth-child(1) {
         font-weight: 600;
+        color: white;
         font-size: 20px;
       }
       i {
         padding-right: 8px;
         font-size: 20px;
-        color: red;
+        color: #fddb00;
       }
     }
     form {
       display: flex;
       flex-direction: row;
-      border: 1px solid grey;
       padding: 4px;
-      background-color: white;
+      background-color: #5f6368;
       border-radius: 8px;
       i {
         width: 60px;
         align-items: center;
-        font-weight: 25px;
+        font-weight: 200 !important;
+        color: #fddb00;
       }
     }
 
     input {
       flex-grow: 2;
       border: none;
-      height: 40px;
+      height: 35px;
+      background-color: transparent;
       border-radius: 5px;
       padding: 4px;
     }
 
     input:focus {
       outline: none;
+      color: white;
     }
     input::-webkit-input-placeholder {
-      font-size: 18px;
+      font-size: 17px;
+      font-weight: 200;
+      color: #ebebeb;
       /* line-height: 3; */
     }
     input[type="text"] {
@@ -61,9 +66,9 @@ const Style = styled.div`
 
     button {
       border: none;
-      background-color: green;
-      color: white;
-      width: 90px;
+      background-color: #fddb00;
+      /* color: white; */
+      width: 80px;
       padding: 1px;
       font-size: 16px;
       font-weight: 400;
@@ -90,7 +95,7 @@ export const Input = () => {
               textAlign: "center",
               display: "flex",
               justifyContent: "center",
-              fontWeight:'200'
+              fontWeight: "200",
             }}
             className="fa fa-search"
             aria-hidden="true"
