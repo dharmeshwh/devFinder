@@ -126,7 +126,7 @@ const Style = styled.div`
     font-weight: 500;
   }
 `;
-export const Bottom = () => {
+export const Bottom = ({light}) => {
   const { data, loading, error } = useSelector((store) => store);
   let time = data.created_at.split("T")[0].split("-");
   let temp = time[0];
@@ -164,7 +164,7 @@ export const Bottom = () => {
           <div className="abouttwo">
             <div>
               <h1>{data.name}</h1>
-              <p className="gitName">@{data.login}</p>
+              <p className={light ? "gitName theme" : 'gitName'}>@{data.login}</p>
             </div>
             <p className="date">Joined {day + " " + month + " " + year}</p>
           </div>
@@ -175,19 +175,19 @@ export const Bottom = () => {
       </div>
       <div className="blackdiv">
         <div className="blackchild">
-          <p>Repoes</p>
+          <p className={light ? 'theme' : ''}>Repoes</p>
           <h1>{data.public_repos}</h1>
         </div>
         <div className="blackchild">
-          <p>Gists</p>
+          <p className={light ? 'theme' : ''}>Gists</p>
           <h1>{data.public_gists}</h1>
         </div>
         <div className="blackchild">
-          <p>Following</p>
+          <p className={light ? 'theme' : ''}>Following</p>
           <h1>{data.following}</h1>
         </div>
         <div className="blackchild">
-          <p>Followers</p>
+          <p className={light ? 'theme' : ''}>Followers</p>
           <h1>{data.followers}</h1>
         </div>
       </div>
@@ -202,7 +202,7 @@ export const Bottom = () => {
         </div>
         <div className="details">
           <i className="fa fa-link" aria-hidden="true"></i>
-          <p className="linkdin">{data.blog}</p>
+          <p className={light ? "theme linkdin" : 'linkdin'}>{data.blog}</p>
         </div>
         <div className="details">
           <i className="fa fa-map-marker" aria-hidden="true"></i>

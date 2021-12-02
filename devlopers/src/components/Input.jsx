@@ -7,7 +7,15 @@ import { Bottom } from "./Bottom";
 import { useSelector } from "react-redux";
 const Style = styled.div`
 height: 100vh;
+/* background-color: #a0acc4; */
   margin-bottom: 40px;
+  .theme{
+    color: #006eff !important;
+  }
+  .themebtn{
+    background-color: #006eff !important;
+    color: white !important;
+  }
   .hehe{
     position: absolute;
     top: 180px;
@@ -34,11 +42,15 @@ height: 100vh;
         font-weight: 600;
         color: #e4e5e7;
         font-size: 20px;
+        cursor: pointer;
       }
       i {
         padding-right: 8px;
-        font-size: 20px;
+        font-size: 18px;
         color: #fddb00;
+      }
+      .daynight{
+        cursor: pointer;
       }
     }
     .form {
@@ -94,6 +106,7 @@ height: 100vh;
 
 export const Input = () => {
   const dispatch = useDispatch()
+  const [light,setLight] = useState(false)
   const [text, setText] = useState("");
   const handleButton = async()=>{
     dispatch(getDataLoading())
@@ -111,9 +124,11 @@ export const Input = () => {
       <div className={data.length !== 0 || error ? 'main' : 'main hehe'}>
         <div className="upperBox">
           <p>DEVFINDER</p>
-          <p>
-            <i className="fa fa-sun-o" aria-hidden="true"></i>
-            Light
+          <p className="daynight" onClick={()=>{
+            setLight(light ? false : true)
+          }}>
+            <i className={light ? "fa fa-moon-o theme" : 'fa fa-sun-o'} aria-hidden="true"></i>
+            {light ? 'Dark' : 'Light'}
           </p>
         </div>
         <div 
@@ -127,19 +142,19 @@ export const Input = () => {
               justifyContent: "center",
               fontWeight: "200",
             }}
-            className="fa fa-search"
+            className={light ? 'fa fa-search theme' : "fa fa-search"}
             aria-hidden="true"
           ></i>
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             type="text"
-            placeholder="Search your ac here..."
+            placeholder="Find Your Github Here"
           />
-          <button onClick={()=>handleButton()}>Search</button>
+          <button className={light ? 'themebtn' : ''} onClick={()=>handleButton()}>Search</button>
         </div>
       </div>
-     {data.length !== 0 ? <Bottom/> : ''}
+     {data.length !== 0 ? <Bottom light={light}/> : ''}
     </Style>
   );
 };
