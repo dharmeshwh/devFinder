@@ -5,6 +5,18 @@ const Style = styled.div`
   font-family: "M PLUS Code Latin", sans-serif;
   font-family: "Quicksand", sans-serif;
   /* font-family: "Source Code Pro", monospace; */
+  .clr {
+    color: #202124 !important;
+  }
+  .bgwhite {
+    background-color: white !important;
+  }
+  .bgblue {
+    background-color: #f5f8ff !important;
+    h1 {
+      color: black !important;
+    }
+  }
   width: 54%;
   margin: auto;
   padding: 3%;
@@ -125,8 +137,16 @@ const Style = styled.div`
     font-size: 13.6px;
     font-weight: 500;
   }
+  .final {
+    i {
+      color: #1a73e8 !important;
+    }
+  }
+  .para {
+    color: #5f6368;
+  }
 `;
-export const Bottom = ({light}) => {
+export const Bottom = ({ light }) => {
   const { data, loading, error } = useSelector((store) => store);
   let time = data.created_at.split("T")[0].split("-");
   let temp = time[0];
@@ -155,7 +175,7 @@ export const Bottom = ({light}) => {
   ) : error ? (
     ".error"
   ) : (
-    <Style>
+    <Style style={{ background: light ? "white" : "" }}>
       <div className="div1">
         <div className="imgdiv">
           <img src={data.avatar_url} alt="" />
@@ -163,50 +183,56 @@ export const Bottom = ({light}) => {
         <div className="aboutdiv">
           <div className="abouttwo">
             <div>
-              <h1>{data.name}</h1>
-              <p className={light ? "gitName theme" : 'gitName'}>@{data.login}</p>
+              <h1 className={light ? "clr" : ""}>{data.name}</h1>
+              <p className={light ? "gitName theme" : "gitName"}>
+                @{data.login}
+              </p>
             </div>
-            <p className="date">Joined {day + " " + month + " " + year}</p>
+            <p className={light ? "date clr" : "date"}>
+              Joined {day + " " + month + " " + year}
+            </p>
           </div>
           <div>
-            <p className="intro">{data.bio}</p>
+            <p className={light ? "intro clr" : "intro"}>{data.bio}</p>
           </div>
         </div>
       </div>
-      <div className="blackdiv">
+      <div className={light ? "blackdiv bgblue" : "blackdiv"}>
         <div className="blackchild">
-          <p className={light ? 'theme' : ''}>Repoes</p>
+          <p className={light ? "theme" : ""}>Repoes</p>
           <h1>{data.public_repos}</h1>
         </div>
         <div className="blackchild">
-          <p className={light ? 'theme' : ''}>Gists</p>
+          <p className={light ? "theme" : ""}>Gists</p>
           <h1>{data.public_gists}</h1>
         </div>
         <div className="blackchild">
-          <p className={light ? 'theme' : ''}>Following</p>
+          <p className={light ? "theme" : ""}>Following</p>
           <h1>{data.following}</h1>
         </div>
         <div className="blackchild">
-          <p className={light ? 'theme' : ''}>Followers</p>
+          <p className={light ? "theme" : ""}>Followers</p>
           <h1>{data.followers}</h1>
         </div>
       </div>
-      <div className="finalPart">
+      <div className={light ? "finalPart final" : "finalPart"}>
         <div className="details">
           <i className="fa fa-building" aria-hidden="true"></i>
-          <p>{data.location}</p>
+          <p className={light ? "para" : ""}>{data.location}</p>
         </div>
         <div className="details">
           <i className="fa fa-twitter" aria-hidden="true"></i>
-          <p>{data.twitter_username || "Not Found"}</p>
+          <p className={light ? "para" : ""}>
+            {data.twitter_username || "Not Found"}
+          </p>
         </div>
         <div className="details">
           <i className="fa fa-link" aria-hidden="true"></i>
-          <p className={light ? "theme linkdin" : 'linkdin'}>{data.blog}</p>
+          <p className={light ? "theme linkdin" : "linkdin"}>{data.blog}</p>
         </div>
         <div className="details">
           <i className="fa fa-map-marker" aria-hidden="true"></i>
-          <p>{data.location}</p>
+          <p className={light ? "para" : ""}>{data.location}</p>
         </div>
       </div>
     </Style>

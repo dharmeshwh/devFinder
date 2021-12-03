@@ -1,22 +1,42 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
-import axios from 'axios'
+import { ThemeContext } from "../context/ThemeContext";
+import axios from "axios";
 import { useDispatch } from "react-redux";
-import {getDataError, getDataLoading, getDataSucess} from '../redux/action'
+import { getDataError, getDataLoading, getDataSucess } from "../redux/action";
 import { Bottom } from "./Bottom";
 import { useSelector } from "react-redux";
 const Style = styled.div`
-height: 100vh;
-/* background-color: #a0acc4; */
+  height: 100vh;
+  /* background-color: #a0acc4; */
   margin-bottom: 40px;
-  .theme{
+  .theme {
     color: #006eff !important;
   }
-  .themebtn{
+  .back{
+    background-color: white !important;
+  }
+  .light {
+    color: #202124 !important;
+    input:focus {
+      outline: none;
+      color: #202124 !important;
+    }
+    input::-webkit-input-placeholder {
+      font-size: 17px;
+      font-weight: 200;
+      color: #202124 !important;
+      /* line-height: 3; */
+    }
+    input{
+      color: #202124!important;
+    }
+  }
+  .themebtn {
     background-color: #006eff !important;
     color: white !important;
   }
-  .hehe{
+  .hehe {
     position: absolute;
     top: 180px;
     right: 0;
@@ -49,7 +69,7 @@ height: 100vh;
         font-size: 18px;
         color: #fddb00;
       }
-      .daynight{
+      .daynight {
         cursor: pointer;
       }
     }
@@ -95,6 +115,7 @@ height: 100vh;
       border: none;
       background-color: #fddb00;
       color: #1a1a1b;
+      cursor: pointer;
       width: 80px;
       padding: 1px;
       font-size: 16px;
@@ -105,35 +126,38 @@ height: 100vh;
 `;
 
 export const Input = () => {
-  const dispatch = useDispatch()
-  const [light,setLight] = useState(false)
+  const dispatch = useDispatch();
+  const { light, handleLight } = useContext(ThemeContext);
   const [text, setText] = useState("");
-  const handleButton = async()=>{
-    dispatch(getDataLoading())
-    try{
-      const {data} = await axios.get(`https://api.github.com/users/${text}`)
-      dispatch(getDataSucess(data))
+  const handleButton = async () => {
+    dispatch(getDataLoading());
+    try {
+      const { data } = await axios.get(`https://api.github.com/users/${text}`);
+      dispatch(getDataSucess(data));
+    } catch (err) {
+      dispatch(getDataError(err));
     }
-    catch(err){
-     dispatch(getDataError(err))
-    }
-  }
-  const {data,error} = useSelector((store)=>store)
+  };
+  const { data, error } = useSelector((store) => store);
   return (
     <Style>
-      <div className={data.length !== 0 || error ? 'main' : 'main hehe'}>
-        <div className="upperBox">
-          <p>DEVFINDER</p>
-          <p className="daynight" onClick={()=>{
-            setLight(light ? false : true)
-          }}>
-            <i className={light ? "fa fa-moon-o theme" : 'fa fa-sun-o'} aria-hidden="true"></i>
-            {light ? 'Dark' : 'Light'}
+      <div className={data.length !== 0 || error ? "main" : "main hehe"}>
+        <div className={light ? "upperBox light" : 'upperBox'}>
+          <p className={light ? 'light' : ''}>DEVFINDER</p>
+          <p
+            className="daynight"
+            onClick={() => {
+              handleLight(light ? false : true);
+            }}
+          >
+            <i
+              className={light ? "fa fa-moon-o theme" : "fa fa-sun-o"}
+              aria-hidden="true"
+            ></i>
+            {light ? "Dark" : "Light"}
           </p>
         </div>
-        <div 
-        className="form"
-        >
+        <div className={light ? 'form back light' : 'form'}>
           <i
             style={{
               fontSize: "30px",
@@ -142,19 +166,31 @@ export const Input = () => {
               justifyContent: "center",
               fontWeight: "200",
             }}
-            className={light ? 'fa fa-search theme' : "fa fa-search"}
+            className={light ? "fa fa-search theme" : "fa fa-search"}
             aria-hidden="true"
           ></i>
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             type="text"
+            onKeyUp={(e) => {
+              if (e.keyCode === 13) {
+                // Cancel the default action, if needed
+                e.preventDefault();
+                handleButton();
+              }
+            }}
             placeholder="Find Your Github Here"
           />
-          <button className={light ? 'themebtn' : ''} onClick={()=>handleButton()}>Search</button>
+          <button
+            className={light ? "themebtn" : ""}
+            onClick={() => handleButton()}
+          >
+            Search
+          </button>
         </div>
       </div>
-     {data.length !== 0 ? <Bottom light={light}/> : ''}
+      {data.length !== 0 ? <Bottom light={light} /> : ""}
     </Style>
   );
 };
