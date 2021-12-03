@@ -123,6 +123,9 @@ const Style = styled.div`
       border-radius: 10px;
     }
   }
+  .abc{
+    box-shadow: 0px 0px 4px #d3d1d1;
+  }
 `;
 
 export const Input = () => {
@@ -157,7 +160,7 @@ export const Input = () => {
             {light ? "Dark" : "Light"}
           </p>
         </div>
-        <div className={light ? 'form back light' : 'form'}>
+        <div className={light ? 'form back abc light' : 'form'}>
           <i
             style={{
               fontSize: "30px",

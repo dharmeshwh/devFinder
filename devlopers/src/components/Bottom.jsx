@@ -175,7 +175,7 @@ export const Bottom = ({ light }) => {
   ) : error ? (
     ".error"
   ) : (
-    <Style style={{ background: light ? "white" : "" }}>
+    <Style style={{ background: light ? "white" : "" }} className={light ? 'abc' : ''}>
       <div className="div1">
         <div className="imgdiv">
           <img src={data.avatar_url} alt="" />
