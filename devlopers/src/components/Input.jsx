@@ -36,7 +36,7 @@ const Style = styled.div`
   }
   .hehe {
     position: absolute;
-    top: 180px;
+    top: 100px;
     right: 0;
     left: 0;
     bottom: 0;
@@ -48,6 +48,7 @@ const Style = styled.div`
     font-family: "Source Code Pro", monospace;
     width: 60%;
     margin: auto;
+    margin-top: 100px;
     margin-bottom: 20px;
     .upperBox {
       display: flex;
@@ -124,7 +125,7 @@ const Style = styled.div`
     }
   }
   .abc {
-    box-shadow: 0px 0px 4px #d3d1d1;
+    box-shadow: 0px 0px 3px #c3c4c3 !important;
   }
   .loading {
     width: 140px;
