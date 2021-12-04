@@ -120,6 +120,7 @@ const Style = styled.div`
     color: #fddb00;
     display: inline;
     align-items: center;
+    cursor: pointer;
     /* font-family: Red Hat Text; */
   }
   .gitName {
@@ -144,6 +145,30 @@ const Style = styled.div`
   }
   .para {
     color: #5f6368;
+  }
+  @media (max-width: 768px) {
+    width: 85%;
+    margin-top: 30px;
+    .div1 {
+      flex-direction: column;
+      .imgdiv {
+        /* background-color: red; */
+        /* width: 100%!important; */
+        height: 200px;
+        width: 100%;
+        display: flex;
+        padding-top: 10px;
+
+        img {
+          width: 200px;
+        }
+      }
+    }
+    .abouttwo {
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
   }
 `;
 export const Bottom = ({ light }) => {
@@ -170,12 +195,28 @@ export const Bottom = ({ light }) => {
   time[1] = month;
   let day = time[0],
     year = time[2];
+  const handleLinkdin = (e) => {
+    window.location.href = e;
+  };
   return loading ? (
-    "...loading"
+    <div className="loading">
+      <img src="https://c.tenor.com/5o2p0tH5LFQAAAAj/hug.gif" alt="" /> loading
+    </div>
   ) : error ? (
-    ".error"
+    <div className="loading">
+      <div>
+        <img
+          src="https://c.tenor.com/JWrO9tZNp7IAAAAi/cross-logo-letter-x.gif"
+          alt=""
+        />
+      </div>{" "}
+      User not found
+    </div>
   ) : (
-    <Style style={{ background: light ? "white" : "" }} className={light ? 'abc' : ''}>
+    <Style
+      style={{ background: light ? "white" : "" }}
+      className={light ? "abc" : ""}
+    >
       <div className="div1">
         <div className="imgdiv">
           <img src={data.avatar_url} alt="" />
@@ -218,7 +259,7 @@ export const Bottom = ({ light }) => {
       <div className={light ? "finalPart final" : "finalPart"}>
         <div className="details">
           <i className="fa fa-building" aria-hidden="true"></i>
-          <p className={light ? "para" : ""}>{data.location}</p>
+          <p className={light ? "para" : ""}>{data.company || "Not found"}</p>
         </div>
         <div className="details">
           <i className="fa fa-twitter" aria-hidden="true"></i>
@@ -228,11 +269,18 @@ export const Bottom = ({ light }) => {
         </div>
         <div className="details">
           <i className="fa fa-link" aria-hidden="true"></i>
-          <p className={light ? "theme linkdin" : "linkdin"}>{data.blog}</p>
+          <p
+            onClick={() => {
+              handleLinkdin(data.blog ? data.blog : '')
+            }}
+            className={light ? "theme linkdin" : "linkdin"}
+          >
+            {data.blog || "Not found"}
+          </p>
         </div>
         <div className="details">
           <i className="fa fa-map-marker" aria-hidden="true"></i>
-          <p className={light ? "para" : ""}>{data.location}</p>
+          <p className={light ? "para" : ""}>{data.location || "Not found"}</p>
         </div>
       </div>
     </Style>

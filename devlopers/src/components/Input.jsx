@@ -7,13 +7,11 @@ import { getDataError, getDataLoading, getDataSucess } from "../redux/action";
 import { Bottom } from "./Bottom";
 import { useSelector } from "react-redux";
 const Style = styled.div`
-  height: 100vh;
-  /* background-color: #a0acc4; */
   margin-bottom: 40px;
   .theme {
     color: #006eff !important;
   }
-  .back{
+  .back {
     background-color: white !important;
   }
   .light {
@@ -28,8 +26,8 @@ const Style = styled.div`
       color: #202124 !important;
       /* line-height: 3; */
     }
-    input{
-      color: #202124!important;
+    input {
+      color: #202124 !important;
     }
   }
   .themebtn {
@@ -95,6 +93,8 @@ const Style = styled.div`
       background-color: transparent;
       border-radius: 5px;
       padding: 4px;
+      width: 100%;
+      /* background-color: red; */
     }
 
     input:focus {
@@ -123,8 +123,49 @@ const Style = styled.div`
       border-radius: 10px;
     }
   }
-  .abc{
+  .abc {
     box-shadow: 0px 0px 4px #d3d1d1;
+  }
+  .loading {
+    width: 180px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px #a3a2a2;
+    position: absolute;
+    /* top:0; */
+    bottom: 20px;
+    margin: auto;
+    left: 0%;
+    right: 0%;
+    font-weight: 400;
+    background-color: white;
+    display: flex;
+    height: 40px;
+    align-items: center;
+    gap: 15px;
+    padding: 5px;
+    font-size: 17px;
+    /* justify-content: space-around; */
+    text-align: center;
+    div {
+      align-items: center;
+    }
+    img {
+      width: 30px;
+      margin-left: 10px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main{
+      width: 92%;
+      margin: auto;
+    }
+    button{
+      font-size: 13px!important;
+    }
   }
 `;
 
@@ -132,21 +173,34 @@ export const Input = () => {
   const dispatch = useDispatch();
   const { light, handleLight } = useContext(ThemeContext);
   const [text, setText] = useState("");
-  const handleButton = async () => {
-    dispatch(getDataLoading());
-    try {
-      const { data } = await axios.get(`https://api.github.com/users/${text}`);
-      dispatch(getDataSucess(data));
-    } catch (err) {
-      dispatch(getDataError(err));
-    }
+  const handleButton = () => {
+    if(!text)return;
+    else if(text.trim() === data.login)return;
+    else{
+     dispatch(getDataLoading());
+    setTimeout(async () => {
+      try {
+        const { data } = await axios.get(
+          `https://api.github.com/users/${text}`
+        );
+        setText('')
+        dispatch(getDataSucess(data));
+      } catch (err) {
+        dispatch(getDataError(err));
+      }
+    }, 1000);
+   }
   };
-  const { data, error } = useSelector((store) => store);
+  const { data, error, loading, system } = useSelector((store) => store);
+  light
+    ? (document.body.style.backgroundColor = "#f5f8ff")
+    : (document.body.style.backgroundColor = "#202124");
+
   return (
     <Style>
       <div className={data.length !== 0 || error ? "main" : "main hehe"}>
-        <div className={light ? "upperBox light" : 'upperBox'}>
-          <p className={light ? 'light' : ''}>DEVFINDER</p>
+        <div className={light ? "upperBox light" : "upperBox"}>
+          <p className={light ? "light" : ""}>DEVFINDER</p>
           <p
             className="daynight"
             onClick={() => {
@@ -160,7 +214,7 @@ export const Input = () => {
             {light ? "Dark" : "Light"}
           </p>
         </div>
-        <div className={light ? 'form back abc light' : 'form'}>
+        <div className={light ? "form back abc light" : "form"}>
           <i
             style={{
               fontSize: "30px",
@@ -193,7 +247,27 @@ export const Input = () => {
           </button>
         </div>
       </div>
-      {data.length !== 0 ? <Bottom light={light} /> : ""}
+      {/* {data.length !== 0 ? <Bottom light={light} /> : ""} */}
+      {loading ? (
+        <div className="loading">
+          <img src="https://c.tenor.com/5o2p0tH5LFQAAAAj/hug.gif" alt="" />{" "}
+          loading
+        </div>
+      ) : error ? (
+        <div className="loading">
+          <div>
+            <img
+              src="https://c.tenor.com/JWrO9tZNp7IAAAAi/cross-logo-letter-x.gif"
+              alt=""
+            />
+          </div>{" "}
+          User not found
+        </div>
+      ) : system ? (
+        <Bottom light={light} />
+      ) : (
+        ""
+      )}
     </Style>
   );
 };

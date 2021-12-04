@@ -1,14 +1,16 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Input } from "./components/Input";
-import { ThemeContext } from "./context/ThemeContext";
+// import { ThemeContext } from "./context/ThemeContext";
+import './App.css'
 function App() {
-  const {light} = useContext(ThemeContext)
+  // const {light} = useContext(ThemeContext)
   
   return (
-    <div  style={{background:light ? '#f5f8ff' : '#202124' , padding:'10px', paddingTop:'20px'}}>
+    <div>
       <Input />
     </div>
   );
 }
 
 export default App;
+// style={{background:light ? '#f5f8ff' : '#202124' ,}
