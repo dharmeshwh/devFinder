@@ -127,9 +127,10 @@ const Style = styled.div`
     box-shadow: 0px 0px 4px #d3d1d1;
   }
   .loading {
-    width: 180px;
+    width: 140px;
+    text-align: center;
     border-radius: 10px;
-    box-shadow: 0px 0px 4px #a3a2a2;
+    box-shadow: 0px 0px 4px #afaeae;
     position: absolute;
     /* top:0; */
     bottom: 20px;
@@ -139,11 +140,12 @@ const Style = styled.div`
     font-weight: 400;
     background-color: white;
     display: flex;
-    height: 40px;
+    height: 35px;
     align-items: center;
     gap: 15px;
     padding: 5px;
-    font-size: 17px;
+    font-size: 14px;
+    color: #5f6368;
     /* justify-content: space-around; */
     text-align: center;
     div {
@@ -188,7 +190,7 @@ export const Input = () => {
       } catch (err) {
         dispatch(getDataError(err));
       }
-    }, 1000);
+    }, 800);
    }
   };
   const { data, error, loading, system } = useSelector((store) => store);
@@ -261,7 +263,7 @@ export const Input = () => {
               alt=""
             />
           </div>{" "}
-          User not found
+          No data
         </div>
       ) : system ? (
         <Bottom light={light} />
