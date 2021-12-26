@@ -169,6 +169,10 @@ const Style = styled.div`
       gap: 10px;
       text-align: left;
     }
+    .blackdiv{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 `;
 export const Bottom = ({ light }) => {

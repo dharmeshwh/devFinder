@@ -122,6 +122,10 @@ const Style = styled.div`
       font-size: 16px;
       font-weight: 400;
       border-radius: 10px;
+      transition: 0.3s all;
+    }
+    button:active{
+      transform: scale(0.95);
     }
   }
   .abc {
